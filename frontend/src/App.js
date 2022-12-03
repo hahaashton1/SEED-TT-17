@@ -4,11 +4,17 @@ import LoginPage from "./modules/LoginPage";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/Navbar.js'; 
+import NavBarLogin from './components/NavbarLogin.js'; 
+import Dashboard from "./components/Dashboard.js";
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
+
+      <LoginPage />
+
+      <NavBarLogin />
+      {/* <Dashboard /> */}
       
     </div>
   );
