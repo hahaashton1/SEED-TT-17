@@ -10,7 +10,7 @@ async function query(sql, params) {
 }
 
 async function insert(sql, params) {
-  const connection = await mysql.createConnection(config.mysqlConfig);
+  const connection = await mysql.createConnection(config);
   const [results] = await connection.execute(sql, params);
 
   return results;
