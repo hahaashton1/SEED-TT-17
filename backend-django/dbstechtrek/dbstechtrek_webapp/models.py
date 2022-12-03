@@ -13,7 +13,7 @@ class User(models.Model):
 
 class BankAccount(models.Model):
     accountid = models.IntegerField(primary_key=True)
-    userid = models.ForeignKey('User')
+    userid = models.ForeignKey('User', on_delete=models.CASCADE)
     accounttype = models.CharField(max_length=255, verbose_name= "AccountType")
     accountbalance = models.DecimalField(max_digits=10, decimal_places=2)
 
@@ -21,6 +21,6 @@ class ScheduledTransactions(models.Model):
     transactionid = models.IntegerField(primary_key=True)
     receivingaccountid = models.IntegerField()
     date = models.CharField(max_length=255, verbose_name="Date")
-    transactionammount = models.DecimalField(max_length=10,decimal_places=2)
+    transactionammount = models.DecimalField(max_digits=10,decimal_places=2)
     comment = models.CharField(max_length=255, verbose_name="Comment")
-    accountid = models.ForeignKey('BankAccount')
+    accountid = models.ForeignKey('BankAccount',on_delete=models.CASCADE)
