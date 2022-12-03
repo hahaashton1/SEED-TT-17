@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 // import { Navigate } from "react-router-dom";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+// import Box from "@mui/material/Box";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
+
+// import TextField from "@mui/material/TextField";
 import { authenticate } from "../services/Authentication";
 import "./LoginPage.css";
 
@@ -34,8 +37,28 @@ const LoginPage = () => {
 
   return (
     <div className="loginPage">
-      <h1>DBS!</h1>
-      <Box
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <Card style={{margin: 5}}> 
+      <h1>Welcome to DBS!</h1>
+      <br></br>
+      
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text" placeholder="Enter username" value={username}
+            onChange={onChangeUsername} />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" value={password}
+            onChange={onChangePassword}/>
+        </Form.Group>
+
+      {/* <Box
         component="form"
         sx={{
           display: "flex",
@@ -62,14 +85,15 @@ const LoginPage = () => {
           value={password}
           onChange={onChangePassword}
         />
-      </Box>
+      </Box> */}
       {/* {isError ? (
         <p className="errorText">The password is wrong for this username</p>
       ) : (
         <div />
       )}*/}
 
-      <Button onClick={onClickAuthenticate}>Log In!</Button>
+      <Button variant="danger" onClick={onClickAuthenticate}>Log In!</Button>
+      </Card>
     </div>
   );
 };
