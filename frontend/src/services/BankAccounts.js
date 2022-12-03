@@ -2,11 +2,14 @@ import axios from "axios";
 import { uri } from "../config/config.js";
 import handleResponse from "./handleResponse.js";
 
-const getBankAccountsURI = `${uri}/bankAccounts`;
+const getBankAccountsURI = `${uri}/bankAccounts/`;
 
-export const getBankAccounts = async (userObject) => {
+export const getBankAccounts = async (userId) => {
   try {
-    let uri = getBankAccountsURI.concat(userObject.user_id);
+    console.log(userId);
+    const userIdNum = userId;
+    const userIdString = userIdNum.toString();
+    let uri = getUserTransactionsURI.concat(userIdString);
     let data = await axios.get(uri);
     return handleResponse(data);
   } catch (e) {
@@ -14,11 +17,12 @@ export const getBankAccounts = async (userObject) => {
   }
 };
 
-const getTransactionsURI = `${uri}/accountTransactions`;
+const getTransactionsURI = `${uri}/accountTransactions/`;
 
-export const getScheduledTransactions = async (userObject) => {
+export const getScheduledTransactions = async (userId) => {
   try {
-    let uri = getTransactionsURI.concat(userObject.user_id);
+    const userIdString = userId.toString();
+    let uri = getUserTransactionsURI.concat(userIdString);
     let data = await axios.get(uri);
     return handleResponse(data);
   } catch (e) {
@@ -26,11 +30,12 @@ export const getScheduledTransactions = async (userObject) => {
   }
 };
 
-const getUserTransactionsURI = `${uri}/userTransactions`;
+const getUserTransactionsURI = `${uri}/userTransactions/`;
 
-export const getUserScheduledTransactions = async (userObject) => {
+export const getUserScheduledTransactions = async (userId) => {
   try {
-    let uri = getUserTransactionsURI.concat(userObject.user_id);
+    const userIdString = userId.toString();
+    let uri = getUserTransactionsURI.concat(userIdString);
     let data = await axios.get(uri);
     return handleResponse(data);
   } catch (e) {

@@ -29,22 +29,27 @@ const Dashboard = () => {
   const [selectedAccount, setSelectedAccount] = useState(null);
 
   const getBankAccountsHandler = async () => {
-    const getUserId = window.localStorage.getItem("userObject");
-    const row = await getBankAccounts(getUserId.UserId);
-    console.log(row);
-    setBankAccounts([...row]);
+    const getUserId = JSON.parse(window.localStorage.getItem("userObject"));
+
+    const row = await getBankAccounts(getUserId.UserID);
+    if (row) {
+      console.log(row.data);
+      setBankAccounts([...row.data]);
+    }
   };
 
   const getScheduledTransactionsHandler = async () => {
-    const getUserId = window.localStorage.getItem("userObject");
-    const row = await getScheduledTransactions(getUserId.UserId);
-    setBankAccounts([...row]);
+    const getUserId = JSON.parse(window.localStorage.getItem("userObject"));
+    const row = await getScheduledTransactions(getUserId.UserID);
+    if (row) {
+      setBankAccounts([...row.data]);
+    }
   };
 
   // Only load once on first render
   useEffect(() => {
     // Get userid from local storage
-    const getUserId = window.localStorage.getItem("userObject");
+    const getUserId = JSON.parse(window.localStorage.getItem("userObject"));
     setUserId(getUserId.UserID);
 
     getBankAccountsHandler();
@@ -149,10 +154,10 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {scheduledTransactions.map((transaction) => {
+                {displayScheduledTransactions.map((transaction) => {
                   if (transaction.AccountID === selectedAccount.AccountID) {
                     return (
-                      <tr>
+                      <tr key={transaction.TransactionID}>
                         <td>{transaction.TransactionID}</td>
                         <td>{transaction.AccountID}</td>
                         <td>{transaction.ReceivingAccountID}</td>
