@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import 'reactjs-popup/dist/index.css';
 import background from "../assets/mbs.jpg";
 import { authenticate } from "../services/Authentication";
 import "./LoginPage.css";
 
 const LoginPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,6 +22,8 @@ const LoginPage = () => {
     setPassword(event.target.value);
   };
 
+  let navigate = useNavigate(); 
+
   const onClickAuthenticate = async () => {
     const userObject = {
       username: username,
@@ -29,13 +33,14 @@ const LoginPage = () => {
 
     const response = await authenticate(userObject);
     console.log(response);
-    setIsLoggedIn(response.data.correct_password);
-    //authenticate
-  };
+    setIsLoggedIn(response.data.is_loggedin);
 
-  if(isLoggedIn){
-    return <Navigate to="/dashboard"/>
-  }
+    if(response.data.is_loggedin){
+      navigate("/dashboard")
+    } else {
+      alert("Incorrect username/password")
+    }
+  };
 
   return (
     <div className="loginPage" style={{paddingTop: "300px", paddingBottom: "300px", backgroundImage: `url(${background})`, backgroundSize: 'cover'}}>
@@ -56,41 +61,8 @@ const LoginPage = () => {
             onChange={onChangePassword}/>
         </Form.Group>
 
-      {/* <Box
-        component="form"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          "& > :not(style)": { m: 1, width: "60ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          id="Username"
-          label="Username"
-          variant="outlined"
-          error={isError}
-          value={username}
-          onChange={onChangeUsername}
-        />
-        <TextField
-          id="Password"
-          label="Password"
-          variant="outlined"
-          error={isError}
-          value={password}
-          onChange={onChangePassword}
-        />
-      </Box> */}
-      {/* {isError ? (
-        <p className="errorText">The password is wrong for this username</p>
-      ) : (
-        <div />
-      )}*/}
-
       <Button variant="danger" onClick={onClickAuthenticate}>Log In!</Button>
+
       </div> 
       </Card>
     

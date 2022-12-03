@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import logo from '../assets/dbslogo.jpg'; 
 import Navbar from 'react-bootstrap/Navbar';
 
-function NavBar() {
+function NavBarLogin() {
   return (
     <Navbar variant="dark" fixed="top" style={{backgroundColor: "#010001", paddingLeft:0}}>
         <Container>
@@ -14,11 +14,10 @@ function NavBar() {
               alt-prop= "dbs logo"
             />
           </Navbar.Brand>
-            
-          
+              
         </Container>
     </Navbar>
   );
 }
 
-export default NavBar;
+export default NavBarLogin;
