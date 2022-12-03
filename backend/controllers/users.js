@@ -1,17 +1,28 @@
+const db = require("./db")
 async function user_login(username, password) {
-    db.execute(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
-        [username, password],
-        (err, result)=> {
-            if (err) {
-                res.send({err: err});
-            }
-
-            if (result.length > 0) {
-                res.send( result);
-            }
-            else({message: "Wrong username/password comination!"});
-        }
+    
+    const response = await db.query(
+        `SELECT * FROM user WHERE username = "${username}"`,
     );
+
+    var user_found = false
+    var correct_password = false
+    var is_loggedin = false
+
+    if (response) {
+        user_found = true 
+
+        var password_db = response[0].Password
+
+        if (password != password_db) {
+            return {response: is_loggedin, user_found, correct_password}
+        } else {
+            is_loggedin = true
+            correct_password = true
+            return {response: is_loggedin, user_found, correct_password}
+        }
+    } else {
+        return {response: is_loggedin, user_found, correct_password}
+    }
 }
-module.export={user_login}
+module.exports={user_login}

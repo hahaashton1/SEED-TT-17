@@ -1,6 +1,6 @@
 import axios from "axios";
-import { uri } from "../config/config";
-import handleResponse from "./handleResponses";
+import { uri } from "../config/config.js";
+import handleResponse from "./handleResponse.js";
 
 const authenticationUri = `${uri}/login`;
 

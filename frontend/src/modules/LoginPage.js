@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { authenticate } from "../services/Authentication";
 import "./LoginPage.css";
 
 const LoginPage = () => {
@@ -24,6 +25,10 @@ const LoginPage = () => {
       username: username,
       password: password,
     };
+    console.log(userObject);
+
+    const response = await authenticate(userObject);
+    console.log(response);
     //authenticate
   };
 

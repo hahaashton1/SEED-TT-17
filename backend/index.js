@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");
 var config = require('./config/config.js');
-const user_login = require('./controllers/users.js');
+const users = require('./controllers/users.js');
 
 const db = mysql.createConnection(config.mysqlConfig);
 
@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 
 app.post('/login', async function(req, res) {
   try {
-    res.json(await user_login(req.body.username, req.body.password))
+    res.json(await users.user_login(req.body.username, req.body.password))
   } catch(err) {
     console.error(err)
   }
