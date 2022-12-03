@@ -55,10 +55,24 @@ async function update_email(user_id, new_email) {
   return { rows };
 }
 
+async function delete_address(user_id) {
+  const rows = await db.insert(`
+    UPDATE USER SET Address = NULL WHERE UserId = ${user_id}`);
+  return { rows };
+}
+
+async function delete_email(user_id) {
+  const rows = await db.insert(`
+      UPDATE USER SET Email = NULL WHERE UserId = ${user_id}`);
+  return { rows };
+}
+
 module.exports = {
   user_login,
   get_address,
   get_email,
   update_address,
   update_email,
+  delete_address,
+  delete_email,
 };
