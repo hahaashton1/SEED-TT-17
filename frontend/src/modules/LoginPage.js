@@ -32,6 +32,15 @@ const LoginPage = () => {
 
     const response = await authenticate(userObject);
     console.log(response);
+
+    //stores the user id for subsequence actions
+    if (response.data.is_loggedin) {
+      window.localStorage.setItem(
+        "userObject",
+        JSON.stringify(response.data.userObject)
+      );
+    }
+
     //authenticate
   };
 
@@ -42,23 +51,31 @@ const LoginPage = () => {
       <br></br>
       <br></br>
       <br></br>
-      <Card style={{margin: 5}}> 
-      <h1>Welcome to DBS!</h1>
-      <br></br>
-      
+      <Card style={{ margin: 5 }}>
+        <h1>Welcome to DBS!</h1>
+        <br></br>
+
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Enter username" value={username}
-            onChange={onChangeUsername} />
+          <Form.Control
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={onChangeUsername}
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" value={password}
-            onChange={onChangePassword}/>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={onChangePassword}
+          />
         </Form.Group>
 
-      {/* <Box
+        {/* <Box
         component="form"
         sx={{
           display: "flex",
@@ -86,13 +103,15 @@ const LoginPage = () => {
           onChange={onChangePassword}
         />
       </Box> */}
-      {/* {isError ? (
+        {/* {isError ? (
         <p className="errorText">The password is wrong for this username</p>
       ) : (
         <div />
       )}*/}
 
-      <Button variant="danger" onClick={onClickAuthenticate}>Log In!</Button>
+        <Button variant="danger" onClick={onClickAuthenticate}>
+          Log In!
+        </Button>
       </Card>
     </div>
   );

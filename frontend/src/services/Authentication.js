@@ -2,7 +2,7 @@ import axios from "axios";
 import { uri } from "../config/config.js";
 import handleResponse from "./handleResponse.js";
 
-const authenticationUri = `${uri}/login`;
+const authenticationUri = `${uri}/users/login`;
 
 export const authenticate = async (userObject) => {
   try {
