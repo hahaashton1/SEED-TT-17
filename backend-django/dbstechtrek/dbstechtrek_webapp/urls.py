@@ -7,5 +7,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('viewTransactionDetails', views.viewTransactionDetails, name='viewTransactionDetails'),
     path('createTransactionDetails', views.createTransactionDetails, name='createTransactionDetails'),
-    path('deleteTransactionDetails', csrf_exempt(views.deleteTransactionDetails), name='deleteTransactionDetails'),
+    path('deleteTransactionDetails', views.deleteTransactionDetails, name='deleteTransactionDetails'),
 ]

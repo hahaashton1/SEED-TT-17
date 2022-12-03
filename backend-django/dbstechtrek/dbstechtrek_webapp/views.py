@@ -92,12 +92,8 @@ def createTransactionDetails(request):
 
 def deleteTransactionDetails(request):
     transid = None
-    data = request.POST
-    print(data)
-    transid = data.get("TransactionID")
-    print(transid)
-    if request.method == 'POST':
-        pass
+    if request.method == 'GET':
+        transid = request.GET["TransactionID"]
     if transid is not None:
         scheduledTransactionObj = ScheduledTransactions.objects.get(transactionid=transid)
         scheduledTransactionObj.delete()
