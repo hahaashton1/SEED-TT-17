@@ -26,7 +26,7 @@ function NavBar() {
               >Accounts</Nav.Link>
           </Nav>
           <Nav>
-            <NavDropdown title="Profile" id="basic-nav-dropdown" className="navlink" style={{color:'#000000'}}>
+            <NavDropdown title="Profile" id="basic-nav-dropdown" className="navlink" style={{color:'#FF3333'}}>
               <NavDropdown.Item href="settings"
                 className="navdropdown">Settings</NavDropdown.Item>
               <NavDropdown.Item href="logout"

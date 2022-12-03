@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Dashboard.css';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -9,40 +10,58 @@ import Table from "react-bootstrap/Table";
 import AddModal from "./addModal";
 
 const Dashboard = () => {
-
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+    const handleShow = () => setShow(true); 
     return (
-        <Container fluid="md">
+        <Container fluid="md" style={{paddingTop: 100}}>
             <Col>
                 <Row>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Dropdown Button
-                        </Dropdown.Toggle>
+                    <Col>
+                        <h4 className="title-header">Welcome User!</h4>
+                    </Col>
+                    <Col> 
+                        <div className="d-flex justify-content-end">
+                            <Dropdown>
+                                <Dropdown.Toggle id="dropdown-basic" variant="danger" className='dropdown-header'>
+                                    Accounts
+                                </Dropdown.Toggle>
 
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item href="#/account-1">Account 1</Dropdown.Item>
+                                    <Dropdown.Item href="#/account-2">Account 2</Dropdown.Item>
+                                    <Dropdown.Item href="#/account-3">Account 3</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
+                        
+                        
+                    </Col>
                 </Row>
-                <Row>
-                    <Card className="text-center">
-                        <Card.Header>Account Details</Card.Header>
-                        <Card.Body>
-                            <Card.Title>Account ID: ASD123</Card.Title>
-                            <Card.Text>Type: Checking</Card.Text>
-                        </Card.Body>
-                        <Card.Footer className="text-muted">Balance: 1234</Card.Footer>
+                <h4 className="title-header">Account Details</h4>
+                        <Card className="card-format">
+                            <Card.Body>
+                                <Row> 
+                                    <Col>
+                                        <h5 className="card-left">Account ID:</h5>
+                                        <h5 className="card-left">Balance:</h5>
+                                        <h5 className="card-left">Type:</h5>
+                                    </Col>
+                                    <Col>
+                                        <h5 className="card-right">ASD123</h5>
+                                        <h5 className="card-right">1234</h5>
+                                        <h5 className="card-right">Checking</h5>
+                                    </Col>
+                                </Row>
+                            </Card.Body>
                     </Card>
+                <Row>
+                    
                 </Row>
                 <Row>
                     <div>
-                        <h2>Scheduled Transactions</h2>
+                        <br/>
+                        <h4 className="title-header">Scheduled Transactions</h4>
                     </div>
                     <Table striped bordered>
                         <thead>
