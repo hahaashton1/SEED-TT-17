@@ -19,7 +19,8 @@ const Dashboard = () => {
     // bankaccounts 
 
     const [bankAccounts, setBankAccounts] = useState([]);
-    const [scheduledTransactions, setScheduledTransactions] = useState([]);
+    const [scheduledTransactions, setScheduledTransactions] = useState([]);]
+    const [displayScheduledTransactions, setDisplayScheduledTransactions] = useState([]);
     const [selectedAccount, setSelectedAccount] = useState(null);
 
     const getBankAccounts = (userid) => {
@@ -52,13 +53,25 @@ const Dashboard = () => {
     const handleDropChange = (e) => {
         console.log(e.target.value);
 
+        setDisplayScheduledTransactions([]);
+
         // loop through bankAccounts
         bankAccounts.forEach((account, index) => {
-            if (account.account_id === e.target.value) {
-                console.log(account);
+            if (account.AccountID === e.target.value) {
+                //console.log(account);
                 setSelectedAccount(account);
             }
         });
+
+        scheduledTransactions.forEach((transaction, index) => {
+            if (transaction.AccountID === e.target.value) {
+                //console.log(transaction);
+                //setScheduledTransactions(transaction);
+                setDisplayScheduledTransactions([...displayScheduledTransactions, transaction]);
+
+            }
+        });
+
     }
 
     return (
@@ -73,7 +86,7 @@ const Dashboard = () => {
                             {
                                 bankAccounts.map((account) => {
                                     return (
-                                        <Dropdown.Item value={account.AccountType}>{account.AccountType}</Dropdown.Item>
+                                        <Dropdown.Item value={account.AccountID}>{account.AccountID}</Dropdown.Item>
                                     );
                                 })
                             }
@@ -112,69 +125,61 @@ const Dashboard = () => {
                     </Card>
                 </Row>
                 <Row>
-                    
+
                 </Row>
                 <Row>
                     <div>
-                        <br/>
+                        <br />
                         <h4 className="title-header">Scheduled Transactions</h4>
                     </div>
-                    <Container> 
-                    <Table striped bordered>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>AccountID</th>
-                                <th>ReceivingAccountID</th>
-                                <th>Date</th>
-                                <th>Transaction Amount</th>
-                                <th>Comment</th>
-                                <th>-</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                    <td><Button className="delete-button" variant="danger">Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                    <td><Button className="delete-button" variant="danger">Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                    <td><Button className="delete-button" variant="danger">Delete</Button></td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                        
-                        <div className="d-flex justify-content-end"> 
+                    <Container>
+                        <Table striped bordered>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>AccountID</th>
+                                    <th>ReceivingAccountID</th>
+                                    <th>Date</th>
+                                    <th>Transaction Amount</th>
+                                    <th>Comment</th>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {
+                                    scheduledTransactions.map((transaction) => {
+
+                                        if (transaction.AccountID === selectedAccount.AccountID) {
+                                            return (
+                                                <tr>
+                                                    <td>{transaction.TransactionID}</td>
+                                                    <td>{transaction.AccountID}</td>
+                                                    <td>{transaction.ReceivingAccountID}</td>
+                                                    <td>{transaction.Date}</td>
+                                                    <td>{transaction.TransactionAmount}</td>
+                                                    <td>{transaction.Comment}</td>
+                                                    <td><Button variant="danger">Delete</Button></td>
+                                                </tr>
+                                            );
+                                        }
+                                    })
+                                }
+                            </tbody>
+                        </Table>
+
+                        <div className="d-flex justify-content-end">
                             <Button className="add-button" variant="success" size="md" onClick={handleShow}>
                                 Add New Transaction
-                    </Button>
-                    <AddModal show={show} handleClose={handleClose} />
+                            </Button>
+                            <AddModal show={show} handleClose={handleClose} />
                         </div>
-                        
+
                     </Container>
-                    
+
                 </Row>
                 <Row>
-                    
+
                 </Row>
             </Col>
         </Container>
