@@ -37,5 +37,7 @@ def viewTransactionDetails(request, userid):
 def createTransactionDetails(request):
     pass
 
-def deleteTransactionDetails(request):
-    pass
+def deleteTransactionDetails(request, transid):
+    scheduledTransactionObj = ScheduledTransactions.objects.get(transactionid=transid)
+    scheduledTransactionObj.delete()
+    return render(request, 'dbstechtrek_webapp/index.html' )
