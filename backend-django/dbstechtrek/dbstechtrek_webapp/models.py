@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class User(models.Model):
-    userid = models.IntegerField(max_length=200, verbose_name="UserID", )
+    userid = models.IntegerField(verbose_name="UserID", primary_key=True)
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
     firstname = models.CharField(max_length=255, verbose_name="FirstName")
@@ -12,13 +12,13 @@ class User(models.Model):
     optintophystatements = models.IntegerField(max_length=1, verbose_name="OptIntoPhyStatements")
 
 class BankAccount(models.Model):
-    accountid = models.IntegerField(primary_key=True)
+    accountid = models.IntegerField(primary_key=True, verbose_name="AccountID")
     userid = models.ForeignKey('User', on_delete=models.CASCADE)
     accounttype = models.CharField(max_length=255, verbose_name= "AccountType")
     accountbalance = models.DecimalField(max_digits=10, decimal_places=2)
 
 class ScheduledTransactions(models.Model):
-    transactionid = models.IntegerField(primary_key=True)
+    transactionid = models.IntegerField(primary_key=True, verbose_name="TransactionID")
     receivingaccountid = models.IntegerField()
     date = models.CharField(max_length=255, verbose_name="Date")
     transactionammount = models.DecimalField(max_digits=10,decimal_places=2)

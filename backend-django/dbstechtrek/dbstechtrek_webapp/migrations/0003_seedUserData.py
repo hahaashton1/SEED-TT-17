@@ -2,6 +2,9 @@
 
 from django.db import migrations
 from dbstechtrek_webapp.models import User
+from dbstechtrek_webapp.models import BankAccount
+from dbstechtrek_webapp.models import ScheduledTransactions
+
 userdata_list =[
     {
         "UserID": 1,
@@ -71,12 +74,144 @@ def seedUserData(apps, schema_editor):
         )
         user.save()
 
+BankAccountdata_list = [
+    {
+        "AccountID": 621156213,
+        "UserID": 1,
+        "AccountType": "Saving",
+        "AcccountBalance": 70200.71
+    },
+    {
+        "AccountID": 958945214,
+        "UserID": 1,
+        "AccountType": "Current",
+        "AcccountBalance": 99720.46
+    },
+    {
+        "AccountID": 828120424,
+        "UserID": 2,
+        "AccountType": "Multiplier",
+        "AcccountBalance": 50640.12
+    },
+    {
+        "AccountID": 322798030,
+        "UserID": 3,
+        "AccountType": "Multiplier",
+        "AcccountBalance": 39740.17
+    },
+    {
+        "AccountID": 353677039,
+        "UserID": 3,
+        "AccountType": "Saving",
+        "AcccountBalance": 76660.21
+    },
+    {
+        "AccountID": 259555772,
+        "UserID": 4,
+        "AccountType": "Saving",
+        "AcccountBalance": 14020.58
+    },
+    {
+        "AccountID": 339657462,
+        "UserID": 1,
+        "AccountType": "Current",
+        "AcccountBalance": 47380.33
+    },
+    {
+        "AccountID": 785703027,
+        "UserID": 5,
+        "AccountType": "Current",
+        "AcccountBalance": 42460.32
+    }
+]
+
+def seedBankAccountData(apps, schema_editor):
+    BankAccount = apps.get_model('dbstechtrek_webapp', 'BankAccount')
+    for items in userdata_list:
+        print()
+        bankaccount = BankAccount(
+            accountid=items["AccountID"],
+            userid=items["UserID"],
+            accounttype=items["AccountType"],
+            acccountbalance=items["AcccountBalance"]
+        )
+        bankaccount.save()
+
+ScheduledTransactionsdata_list = [
+    {
+        "TransactionID": 1,
+        "AccountID": 621156213,
+        "ReceivingAccountID": 339657462,
+        "Date": "2022-11-08T04:00:00.000Z",
+        "TransactionAmount": 500.00,
+        "Comment": "Monthly Pocket Money"
+    },
+    {
+        "TransactionID": 2,
+        "AccountID": 958945214,
+        "ReceivingAccountID": 621156213,
+        "Date": "2022-11-08T04:00:00.000Z",
+        "TransactionAmount": 8996.00,
+        "Comment": "School Fees"
+    },
+    {
+        "TransactionID": 3,
+        "AccountID": 828120424,
+        "ReceivingAccountID": 322798030,
+        "Date": "2022-11-25T04:00:00.000Z",
+        "TransactionAmount": 3000.00,
+        "Comment": "Driving Centre Top-up"
+    },
+    {
+        "TransactionID": 4,
+        "AccountID": 353677039,
+        "ReceivingAccountID": 785703027,
+        "Date": "2022-11-17T06:21:00.000Z",
+        "TransactionAmount": 255.00,
+        "Comment": "Tuition Fee Payment"
+    },
+    {
+        "TransactionID": 5,
+        "AccountID": 259555772,
+        "ReceivingAccountID": 828120424,
+        "Date": "2022-11-08T04:00:00.000Z",
+        "TransactionAmount": 32.00,
+        "Comment": "Books Payment"
+    }
+]
+
+def seedScheduledTransactionsData(apps, schema_editor):
+    ScheduledTransactions = apps.get_model('dbstechtrek_webapp', 'ScheduledTransactions')
+    for items in userdata_list:
+        print()
+        scheduledtransactions = ScheduledTransactions(
+            transactionid=items["TransactionID"],
+            accountid=items["AccountID"],
+            receivingaccountid=items["ReceivingAccountID"],
+            date=items["Date"],
+            transactionamount=items["TransactionAmount"],
+            comment=items["Comment"]
+        )
+        scheduledtransactions.save()
+
+
 def unseedUserData(apps, schema_editor):
     User = apps.get_model('dbstechtrek_webapp', 'User')
     for items in userdata_list:
         user = User.objects.get(userid=items["UserID"])
         user.delete()
 
+def unseedBankAccountData(apps, schema_editor):
+    User = apps.get_model('dbstechtrek_webapp', 'BankAccount')
+    for items in BankAccountdata_list:
+        BankAccount = BankAccount.objects.get(BankAccount=items["AccountID"])
+        BankAccount.delete()
+
+def unseedScheduledTransactionsData(apps, schema_editor):
+    ScheduledTransactions = apps.get_model('dbstechtrek_webapp', 'ScheduledTransactions')
+    for items in ScheduledTransactionsdata_list:
+        ScheduledTransactions = ScheduledTransactions.objects.get(BankAccount=items["TransactionID"])
+        ScheduledTransactions.delete()
 
 class Migration(migrations.Migration):
 
@@ -86,4 +221,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(seedUserData,unseedUserData),
+        migrations.RunPython(seedBankAccountData,unseedBankAccountData),
+        migrations.RunPython(seedScheduledTransactionsData,unseedScheduledTransactionsData)
     ]
