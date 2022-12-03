@@ -68,7 +68,6 @@ const Dashboard = () => {
         setSelectedAccount(account);
       }
     });
-
     scheduledTransactions.forEach((transaction, index) => {
       if (transaction.AccountID === e.target.value) {
         //console.log(transaction);
