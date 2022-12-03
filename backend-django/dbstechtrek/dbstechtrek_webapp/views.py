@@ -16,7 +16,16 @@ def index(request):
     final_trans_list = []
     for items in all_scheduled_transactions:
         for records in items:
-            final_trans_list.append(records.transactionid)
+            ### records.accountid is a BankAccount
+            individual_trans_dict = {
+                "TransactionID": records.transactionid,
+                "AccountID": records.accountid.accountid,
+                "ReceivingAccountID": records.receivingaccountid,
+                "Date": records.date,
+                "TransactionAmount": records.transactionamount,
+                "Comment": records.comment
+            }
+            final_trans_list.append(individual_trans_dict)
     context = {"user_list": final_trans_list}
     return render(request, 'dbstechtrek_webapp/index.html', context )
 
@@ -26,13 +35,22 @@ def viewTransactionDetails(request, userid):
     #### for every bank account
     ##### get transactions based on bankaccountid
     scheduledTransactionObj = ScheduledTransactions()
-    all_scheduled_transactions = scheduledTransactionObj.getAllScheduledTransactions(1)
+    all_scheduled_transactions = scheduledTransactionObj.getAllScheduledTransactions(userid)
     final_trans_list = []
     for items in all_scheduled_transactions:
         for records in items:
-            final_trans_list.append(records.transactionid)
+            ### records.accountid is a BankAccount
+            individual_trans_dict = {
+                "TransactionID": records.transactionid,
+                "AccountID": records.accountid.accountid,
+                "ReceivingAccountID": records.receivingaccountid,
+                "Date": records.date,
+                "TransactionAmount": records.transactionamount,
+                "Comment": records.comment
+            }
+            final_trans_list.append(individual_trans_dict)
     context = {"user_list": final_trans_list}
-    return render(request, 'dbstechtrek_webapp/index.html', context )
+    return render(request, 'dbstechtrek_webapp/viewTransactionDetails.html', context )
 
 def createTransactionDetails(request):
     pass
@@ -40,4 +58,4 @@ def createTransactionDetails(request):
 def deleteTransactionDetails(request, transid):
     scheduledTransactionObj = ScheduledTransactions.objects.get(transactionid=transid)
     scheduledTransactionObj.delete()
-    return render(request, 'dbstechtrek_webapp/index.html' )
+    return render(request, 'dbstechtrek_webapp/index.html')
