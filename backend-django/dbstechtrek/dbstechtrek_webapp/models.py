@@ -8,3 +8,4 @@ class User(models.Model):
     lastname = models.CharField(max_length=255, verbose_name="LastName")
     email = models.CharField(max_length=255, verbose_name="Email")
     address = models.CharField(max_length=255, verbose_name="Address")
+    optintophystatements = models.IntegerField(max_length=1, verbose_name="OptIntoPhyStatements")
