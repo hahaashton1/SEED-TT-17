@@ -66,3 +66,12 @@
     border-radius: 0; 
     text-align: right; 
 }
+
+label{
+    font-family:Tahoma;
+}
+
+input{
+    border-radius: 0;
+    border-color: #d8d5d5;
+}
