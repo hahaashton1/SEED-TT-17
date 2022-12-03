@@ -54,14 +54,15 @@ def viewTransactionDetails(request, userid):
     return render(request, 'dbstechtrek_webapp/viewTransactionDetails.html', context )
 
 def createTransactionDetails(request):
-    ### get current account id
-    ### Create scheduled transaction object based on form input
-    transaction_id = ""
-    receiving_account_id = ""
-    date_value = ""
-    transaction_amount = ""
-    transaction_comment = ""
-    user_account_id = ""
+    if request.method == 'POST':
+        ### get current account id
+        ### Create scheduled transaction object based on form input
+        transaction_id = request.POST["TransactionID"]
+        receiving_account_id = request.POST["AccountID"]
+        date_value = request.POST["ReceivingAccountID"]
+        transaction_amount = request.POST["Date"]
+        transaction_comment = request.POST["TransactionAmount"]
+        user_account_id = request.POST["Comment"]
     scheduledTransactionObj = ScheduledTransactions(
         transactionid = transaction_id,
         receivingaccountid = receiving_account_id,
@@ -81,7 +82,7 @@ def createTransactionDetails(request):
         # schedule_type=Schedule.DAILY
     )
     ### if scheduler cannot work, test using this
-    runTransaction(transaction_id)
+    # runTransaction(transaction_id)
     return render(request, 'dbstechtrek_webapp/index.html' )
     
 
