@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Table from "react-bootstrap/Table";
 import AddModal from "./addModal";
+import axios from "axios";
 
 const Dashboard = () => {
 
@@ -14,19 +15,81 @@ const Dashboard = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // bankaccounts/<userid>
+    // bankaccounts 
+
+    const [bankAccounts, setBankAccounts] = useState([]);
+    const [scheduledTransactions, setScheduledTransactions] = useState([]);]
+    const [displayScheduledTransactions, setDisplayScheduledTransactions] = useState([]);
+    const [selectedAccount, setSelectedAccount] = useState(null);
+
+    const getBankAccounts = (userid) => {
+        axios.get(`http://localhost:5001/accounts/${userid}`)
+            .then((response) => {
+                console.log(response.data);
+                // setBankAccounts(response.data);
+            });
+    }
+
+    const getScheduledTransactions = (userid) => {
+        axios.get(`http://localhost:5001/scheduledtransactions/${userid}`)
+            .then((response) => {
+                console.log(response.data);
+                // setScheduledTransactions(response.data);
+            });
+    }
+
+    // Only load once on first render
+    useEffect(() => {
+
+        // Get userid from local storage
+        const userid = localStorage.getItem("user_id");
+
+        getBankAccounts(userid);
+        getScheduledTransactions(userid);
+
+    }, []);
+
+    const handleDropChange = (e) => {
+        console.log(e.target.value);
+
+        setDisplayScheduledTransactions([]);
+
+        // loop through bankAccounts
+        bankAccounts.forEach((account, index) => {
+            if (account.AccountID === e.target.value) {
+                //console.log(account);
+                setSelectedAccount(account);
+            }
+        });
+
+        scheduledTransactions.forEach((transaction, index) => {
+            if (transaction.AccountID === e.target.value) {
+                //console.log(transaction);
+                //setScheduledTransactions(transaction);
+                setDisplayScheduledTransactions([...displayScheduledTransactions, transaction]);
+
+            }
+        });
+
+    }
+
     return (
         <Container fluid="md">
             <Col>
                 <Row>
-                    <Dropdown>
+                    <Dropdown onChange={(e) => handleDropChange(e)}>
                         <Dropdown.Toggle variant="success" id="dropdown-basic">
                             Dropdown Button
                         </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                        <Dropdown.Menu >
+                            {
+                                bankAccounts.map((account) => {
+                                    return (
+                                        <Dropdown.Item value={account.AccountID}>{account.AccountID}</Dropdown.Item>
+                                    );
+                                })
+                            }
                         </Dropdown.Menu>
                     </Dropdown>
                 </Row>
@@ -38,60 +101,85 @@ const Dashboard = () => {
                             <Card.Text>Type: Checking</Card.Text>
                         </Card.Body>
                         <Card.Footer className="text-muted">Balance: 1234</Card.Footer>
+                        {
+                            // if selectedAccount is not empty
+                            selectedAccount ? (
+                                <>
+                                    <Card.Body>
+                                        <Card.Title>Account ID: {selectedAccount.AccountID}</Card.Title>
+                                        <Card.Text>Type: {selectedAccount.AccountType}</Card.Text>
+                                    </Card.Body>
+                                    <Card.Footer className="text-muted">Balance: {selectedAccount.Balance}</Card.Footer>
+                                </>
+                            ) :
+                                (
+                                    <>
+                                        <Card.Body>
+                                            <Card.Title>Account ID: -</Card.Title>
+                                            <Card.Text>Type: -</Card.Text>
+                                        </Card.Body>
+                                        <Card.Footer className="text-muted">Balance: -</Card.Footer>
+                                    </>
+                                )
+                        }
                     </Card>
                 </Row>
                 <Row>
-                    <div>
-                        <h2>Scheduled Transactions</h2>
-                    </div>
-                    <Table striped bordered>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>AccountID</th>
-                                <th>ReceivingAccountID</th>
-                                <th>Date</th>
-                                <th>Transaction Amount</th>
-                                <th>Comment</th>
-                                <th>-</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                <td><Button variant="danger">Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                <td><Button variant="danger">Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                <td><Button variant="danger">Delete</Button></td>
-                            </tr>
-                        </tbody>
-                    </Table>
+
                 </Row>
                 <Row>
-                    <Button variant="primary" size="md" onClick={handleShow}>
-                        Add Transaction
-                    </Button>
-                    <AddModal show={show} handleClose={handleClose} />
+                    <div>
+                        <br />
+                        <h4 className="title-header">Scheduled Transactions</h4>
+                    </div>
+                    <Container>
+                        <Table striped bordered>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>AccountID</th>
+                                    <th>ReceivingAccountID</th>
+                                    <th>Date</th>
+                                    <th>Transaction Amount</th>
+                                    <th>Comment</th>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {
+                                    scheduledTransactions.map((transaction) => {
+
+                                        if (transaction.AccountID === selectedAccount.AccountID) {
+                                            return (
+                                                <tr>
+                                                    <td>{transaction.TransactionID}</td>
+                                                    <td>{transaction.AccountID}</td>
+                                                    <td>{transaction.ReceivingAccountID}</td>
+                                                    <td>{transaction.Date}</td>
+                                                    <td>{transaction.TransactionAmount}</td>
+                                                    <td>{transaction.Comment}</td>
+                                                    <td><Button variant="danger">Delete</Button></td>
+                                                </tr>
+                                            );
+                                        }
+                                    })
+                                }
+                            </tbody>
+                        </Table>
+
+                        <div className="d-flex justify-content-end">
+                            <Button className="add-button" variant="success" size="md" onClick={handleShow}>
+                                Add New Transaction
+                            </Button>
+                            <AddModal show={show} handleClose={handleClose} />
+                        </div>
+
+                    </Container>
+
+                </Row>
+                <Row>
+
                 </Row>
             </Col>
         </Container>
