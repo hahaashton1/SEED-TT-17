@@ -62,10 +62,9 @@ const LoginPage = () => {
         <p className="errorText">The password is wrong for this username</p>
       ) : (
         <div />
-      )}
+      )}*/}
 
-      <ActionButton text="Log In" onClick={onClickAuthenticate} /> */}
-      <Button onClick={onClickAuthenticate} />
+      <Button onClick={onClickAuthenticate}>Log In!</Button>
     </div>
   );
 };
