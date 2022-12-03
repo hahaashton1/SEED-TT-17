@@ -32,11 +32,13 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django_q',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dbstechtrek_webapp.apps.DbstechtrekWebappConfig'
 ]
 
 MIDDLEWARE = [
@@ -75,8 +77,9 @@ WSGI_APPLICATION = 'dbstechtrek.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'root',
+        'NAME': 'Bank',
     }
 }
 
@@ -121,3 +124,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+Q_CLUSTER = {
+    # 'name': 'myproject',
+    'retry': 5,
+    'workers': 4,
+    'orm': 'default',
+    'timeout': 60,
+}
