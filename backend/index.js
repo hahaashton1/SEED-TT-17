@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 // Routers
-app.use("/bankaccounts", bankAccountRouter);
+app.use("/bankAccounts", bankAccountRouter);
 app.use("/accountTransactions", accountTransactionsRouter);
 app.use("/userTransactions", userTransactionsRouter);
 
