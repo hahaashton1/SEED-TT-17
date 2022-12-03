@@ -24,3 +24,14 @@ class ScheduledTransactions(models.Model):
     transactionamount = models.DecimalField(max_digits=10,decimal_places=2)
     comment = models.CharField(max_length=255, verbose_name="Comment")
     accountid = models.ForeignKey('BankAccount',on_delete=models.CASCADE)
+
+    def getAllScheduledTransactions(self, userid):
+        ### get bank account based on userid
+        #### for every bank account
+        ##### get transactions based on bankaccountid
+        accounts = BankAccount.objects.filter(userid=userid)
+        individual_account_transactions_list = []
+        for individual_account in accounts:
+            individual_account_transactions = ScheduledTransactions.objects.filter(accountid=individual_account.accountid)
+            individual_account_transactions_list.append(individual_account_transactions)
+        return individual_account_transactions_list
