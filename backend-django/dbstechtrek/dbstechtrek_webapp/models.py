@@ -21,6 +21,6 @@ class ScheduledTransactions(models.Model):
     transactionid = models.IntegerField(primary_key=True, verbose_name="TransactionID")
     receivingaccountid = models.IntegerField()
     date = models.CharField(max_length=255, verbose_name="Date")
-    transactionammount = models.DecimalField(max_digits=10,decimal_places=2)
+    transactionamount = models.DecimalField(max_digits=10,decimal_places=2)
     comment = models.CharField(max_length=255, verbose_name="Comment")
     accountid = models.ForeignKey('BankAccount',on_delete=models.CASCADE)

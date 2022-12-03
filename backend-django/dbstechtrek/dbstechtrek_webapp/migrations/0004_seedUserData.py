@@ -127,13 +127,14 @@ BankAccountdata_list = [
 
 def seedBankAccountData(apps, schema_editor):
     BankAccount = apps.get_model('dbstechtrek_webapp', 'BankAccount')
-    for items in userdata_list:
-        print()
+    User = apps.get_model('dbstechtrek_webapp', 'User')
+    for items in BankAccountdata_list:
+        userobj = User.objects.get(userid=items["UserID"])
         bankaccount = BankAccount(
             accountid=items["AccountID"],
-            userid=items["UserID"],
+            userid=userobj,
             accounttype=items["AccountType"],
-            acccountbalance=items["AcccountBalance"]
+            accountbalance=items["AcccountBalance"]
         )
         bankaccount.save()
 
@@ -182,11 +183,12 @@ ScheduledTransactionsdata_list = [
 
 def seedScheduledTransactionsData(apps, schema_editor):
     ScheduledTransactions = apps.get_model('dbstechtrek_webapp', 'ScheduledTransactions')
-    for items in userdata_list:
-        print()
+    BankAccount = apps.get_model('dbstechtrek_webapp', 'BankAccount')
+    for items in ScheduledTransactionsdata_list:
+        bankaccountObj = BankAccount.objects.get(accountid=items["AccountID"])
         scheduledtransactions = ScheduledTransactions(
             transactionid=items["TransactionID"],
-            accountid=items["AccountID"],
+            accountid=bankaccountObj,
             receivingaccountid=items["ReceivingAccountID"],
             date=items["Date"],
             transactionamount=items["TransactionAmount"],
@@ -216,7 +218,7 @@ def unseedScheduledTransactionsData(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dbstechtrek_webapp', '0002_user_userid'),
+        ('dbstechtrek_webapp', '0003_bankaccount_remove_user_id_alter_user_userid_and_more'),
     ]
 
     operations = [
