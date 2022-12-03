@@ -26,11 +26,12 @@ def viewTransactionDetails(request, userid):
     #### for every bank account
     ##### get transactions based on bankaccountid
     scheduledTransactionObj = ScheduledTransactions()
-    all_scheduled_transactions = scheduledTransactionObj.getAllScheduledTransactions()
-    transaction_list = []
-    for transactions in all_scheduled_transactions:
-        transaction_list.append(transactions.accountid)
-    context = {"transaction_list": transaction_list}
+    all_scheduled_transactions = scheduledTransactionObj.getAllScheduledTransactions(1)
+    final_trans_list = []
+    for items in all_scheduled_transactions:
+        for records in items:
+            final_trans_list.append(records.transactionid)
+    context = {"user_list": final_trans_list}
     return render(request, 'dbstechtrek_webapp/index.html', context )
 
 def createTransactionDetails(request):
