@@ -2,6 +2,11 @@ from .models import *
 import datetime
 
 def runTransaction(transaction_id):
+    # *task["args"]
+    # transaction_id = *task["kwargs"]["TransactionID"]
+    # print(transaction_id)
+    # print(kwargs)
+    transaction_id = transaction_id
     transaction = ScheduledTransactions.objects.get(transactionid=transaction_id)
     ### Get Amount
     transfer_amount = transaction.transactionamount

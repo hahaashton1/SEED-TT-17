@@ -69,25 +69,28 @@ def createTransactionDetails(request):
         user_account_id = request.GET["AccountID"]
         if user_account_id:
             user_account_obj = BankAccount.objects.get(accountid=user_account_id)
-        scheduledTransactionObj = ScheduledTransactions(
-            transactionid = transaction_id,
-            receivingaccountid = receiving_account_id,
-            date = date_value,
-            transactionamount = transaction_amount,
-            comment = transaction_comment,
-            accountid = user_account_obj,
-        )
-        scheduledTransactionObj.save()
+            scheduledTransactionObj = ScheduledTransactions(
+                transactionid = transaction_id,
+                receivingaccountid = receiving_account_id,
+                date = date_value,
+                transactionamount = transaction_amount,
+                comment = transaction_comment,
+                accountid = user_account_obj,
+            )
+            scheduledTransactionObj.save()
 
-        ### Create Scheduled Obj to run task
-        Schedule.objects.create(
-            func='runTransaction',
-            # hook='hooks.print_result',
-            args=f'transaction_id={transaction_id}',
-            next_run=date_value,
-            repeats=1
-            # schedule_type=Schedule.DAILY
-        )
+            ### Create Scheduled Obj to run task
+            Schedule.objects.create(
+                func='dbstechtrek_webapp.tasks.runTransaction',
+                # hook='hooks.print_result',
+                args=f"{transaction_id}",
+                # kwargs={
+                #     "TransactionID": transaction_id
+                # },
+                next_run=date_value,
+                repeats=1
+                # schedule_type=Schedule.DAILY
+            )
     ### if scheduler cannot work, test using this
     # runTransaction(transaction_id)
     return render(request, 'dbstechtrek_webapp/index.html' )
