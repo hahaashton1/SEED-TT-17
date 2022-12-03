@@ -30,26 +30,30 @@ def index(request):
     context = {"user_list": final_trans_list}
     return render(request, 'dbstechtrek_webapp/index.html', context )
 
-def viewTransactionDetails(request, userid):
+def viewTransactionDetails(request):
     ### Get userid from request
     ### get bank account based on userid
     #### for every bank account
     ##### get transactions based on bankaccountid
-    scheduledTransactionObj = ScheduledTransactions()
-    all_scheduled_transactions = scheduledTransactionObj.getAllScheduledTransactions(userid)
+    userid = None
     final_trans_list = []
-    for items in all_scheduled_transactions:
-        for records in items:
-            ### records.accountid is a BankAccount
-            individual_trans_dict = {
-                "TransactionID": records.transactionid,
-                "AccountID": records.accountid.accountid,
-                "ReceivingAccountID": records.receivingaccountid,
-                "Date": records.date,
-                "TransactionAmount": records.transactionamount,
-                "Comment": records.comment
-            }
-            final_trans_list.append(individual_trans_dict)
+    if request.method == 'GET':
+        userid = request.GET["UserID"]
+    if userid is not None:
+        scheduledTransactionObj = ScheduledTransactions()
+        all_scheduled_transactions = scheduledTransactionObj.getAllScheduledTransactions(userid)
+        for items in all_scheduled_transactions:
+            for records in items:
+                ### records.accountid is a BankAccount
+                individual_trans_dict = {
+                    "TransactionID": records.transactionid,
+                    "AccountID": records.accountid.accountid,
+                    "ReceivingAccountID": records.receivingaccountid,
+                    "Date": records.date,
+                    "TransactionAmount": records.transactionamount,
+                    "Comment": records.comment
+                }
+                final_trans_list.append(individual_trans_dict)
     context = {"user_list": final_trans_list}
     return render(request, 'dbstechtrek_webapp/viewTransactionDetails.html', context )
 
@@ -86,7 +90,11 @@ def createTransactionDetails(request):
     return render(request, 'dbstechtrek_webapp/index.html' )
     
 
-def deleteTransactionDetails(request, transid):
-    scheduledTransactionObj = ScheduledTransactions.objects.get(transactionid=transid)
-    scheduledTransactionObj.delete()
+def deleteTransactionDetails(request):
+    transid = None
+    if request.method == 'POST':
+        transid = request.POST["TransactionID"]
+    if transid is not None:
+        scheduledTransactionObj = ScheduledTransactions.objects.get(transactionid=transid)
+        scheduledTransactionObj.delete()
     return render(request, 'dbstechtrek_webapp/index.html')
