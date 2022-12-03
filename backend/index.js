@@ -1,15 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");
-var config = require('./config/config.js');
-const users = require('./controllers/users.js');
+var config = require("./config/config.js");
+const usersRouter = require("./routes/usersRoute.js");
 
 const db = mysql.createConnection(config.mysqlConfig);
 
-db.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
+db.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 const app = express();
 const port = 5001;
@@ -27,13 +27,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post('/login', async function(req, res) {
-  try {
-    res.json(await users.user_login(req.body.username, req.body.password))
-  } catch(err) {
-    console.error(err)
-  }
-});
+app.use("/users", usersRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

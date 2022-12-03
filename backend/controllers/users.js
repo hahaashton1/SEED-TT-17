@@ -1,4 +1,5 @@
 const db = require("./db");
+
 async function user_login(username, password) {
   const response = await db.query(
     `SELECT * FROM user WHERE username = "${username}"`
@@ -27,4 +28,25 @@ async function user_login(username, password) {
     return { user_found, correct_password, is_loggedin };
   }
 }
-module.exports = { user_login };
+
+async function get_address(user_id) {
+  console.log(user_id);
+  const rows = await db.query(
+    `SELECT address from USER WHERE UserId = ${user_id}`
+  );
+  return { rows };
+}
+
+async function get_email(user_id) {
+  const rows = await db.query(`
+    SELECT email from USER WHERE UserId = ${user_id}`);
+  return { rows };
+}
+
+async function update_address(user_id, new_address) {
+  const rows = await db.insert(`
+    UPDATE USER SET Address = "${new_address}" WHERE UserId = user_id`);
+  return { rows };
+}
+
+module.exports = { user_login, get_address, get_email, update_address };
