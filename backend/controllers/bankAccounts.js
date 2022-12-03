@@ -11,17 +11,15 @@ const getAllBankAccounts = async (req, res) => {
     }
 }
 
-const getBankAccountById = async (req, res) => {
+const getBankAccountByUserId = async (req, res) => {
     try {
-        const bankAccount = await db.query(`SELECT * FROM bankaccount WHERE ${req.body.AccountID}`);
-        console.log(bankAccount);
-        res.json(bankAccount);
+        const bankAccounts = await db.query(`SELECT * FROM bankaccount WHERE UserID = ${req.params.id}`);
+        console.log(bankAccounts);
+        res.json(bankAccounts);
     } catch (error) {
         console.error(error);
         res.status(500).json({message: "Server Error"});
     }
 }
 
-module.exports = {getAllBankAccounts, getBankAccountById};
-
-// getAllBankAccounts();
+module.exports = {getAllBankAccounts, getBankAccountByUserId};
