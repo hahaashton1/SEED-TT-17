@@ -92,9 +92,14 @@ def createTransactionDetails(request):
 
 def deleteTransactionDetails(request):
     transid = None
+    data = request.POST
+    print(data)
+    transid = data.get("TransactionID")
+    print(transid)
     if request.method == 'POST':
-        transid = request.POST["TransactionID"]
+        pass
     if transid is not None:
         scheduledTransactionObj = ScheduledTransactions.objects.get(transactionid=transid)
         scheduledTransactionObj.delete()
+        print("Deleted successfully")
     return render(request, 'dbstechtrek_webapp/index.html')
