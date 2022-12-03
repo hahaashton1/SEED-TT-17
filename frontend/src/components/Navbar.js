@@ -29,7 +29,7 @@ function NavBar() {
             <NavDropdown title="Profile" id="basic-nav-dropdown" className="navlink" style={{color:'#000000'}}>
               <NavDropdown.Item href="settings"
                 className="navdropdown">Settings</NavDropdown.Item>
-              <NavDropdown.Item href="logout"
+              <NavDropdown.Item href="/"
                 className="navdropdown">Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>

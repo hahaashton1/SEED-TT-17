@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-// import { Navigate } from "react-router-dom";
-// import Box from "@mui/material/Box";
+import { Navigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import background from "../assets/mbs.jpg";
-
-// import TextField from "@mui/material/TextField";
 import { authenticate } from "../services/Authentication";
 import "./LoginPage.css";
 
 const LoginPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,8 +29,13 @@ const LoginPage = () => {
 
     const response = await authenticate(userObject);
     console.log(response);
+    setIsLoggedIn(response.data.correct_password);
     //authenticate
   };
+
+  if(isLoggedIn){
+    return <Navigate to="/dashboard"/>
+  }
 
   return (
     <div className="loginPage" style={{paddingTop: "300px", paddingBottom: "300px", backgroundImage: `url(${background})`, backgroundSize: 'cover'}}>

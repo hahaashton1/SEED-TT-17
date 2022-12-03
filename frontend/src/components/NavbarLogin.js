@@ -1,9 +1,6 @@
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
 import logo from '../assets/dbslogo.jpg'; 
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import './Navbar.css';
 
 function NavBar() {
   return (
