@@ -9,7 +9,6 @@
     color: white; 
     background-color: #f04f4f; 
     border-radius: 0; 
-    justify-content: center;
     text-align: right; 
 }
 
@@ -33,8 +32,17 @@
     text-align: left; 
 }
 
+.welcome-title{
+    font-family: Tahoma; 
+    font-weight: bold; 
+    font-size: 20; 
+    color: #f04f4f; 
+    text-align: left; 
+}
+
 .card-format{
     border-radius: 0; 
+    box-shadow: 3px 2px #d5d3d3; 
 }
 
 .card-left{
@@ -47,4 +55,14 @@
     font-family: Tahoma; 
     font-size: 20; 
     text-align: left; 
+}
+
+.delete-button{
+    border-radius: 0; 
+    background-color: #f04f4f; 
+}
+
+.add-button{
+    border-radius: 0; 
+    text-align: right; 
 }

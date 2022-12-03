@@ -18,7 +18,7 @@ const Dashboard = () => {
             <Col>
                 <Row>
                     <Col>
-                        <h4 className="title-header">Welcome User!</h4>
+                        <h4 className="welcome-title" style={{paddingTop: 20}}>Welcome to DBS, User!</h4>
                     </Col>
                     <Col> 
                         <div className="d-flex justify-content-end">
@@ -44,13 +44,13 @@ const Dashboard = () => {
                                 <Row> 
                                     <Col>
                                         <h5 className="card-left">Account ID:</h5>
-                                        <h5 className="card-left">Balance:</h5>
                                         <h5 className="card-left">Type:</h5>
+                                        <h5 className="card-left">Balance:</h5>
                                     </Col>
                                     <Col>
                                         <h5 className="card-right">ASD123</h5>
-                                        <h5 className="card-right">1234</h5>
                                         <h5 className="card-right">Checking</h5>
+                                        <h5 className="card-right">1234 SGD</h5>
                                     </Col>
                                 </Row>
                             </Card.Body>
@@ -63,54 +63,62 @@ const Dashboard = () => {
                         <br/>
                         <h4 className="title-header">Scheduled Transactions</h4>
                     </div>
-                    <Table striped bordered>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>AccountID</th>
-                                <th>ReceivingAccountID</th>
-                                <th>Date</th>
-                                <th>Transaction Amount</th>
-                                <th>Comment</th>
-                                <th>-</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                <td><Button variant="danger">Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                <td><Button variant="danger">Delete</Button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>621156213</td>
-                                <td>339657462</td>
-                                <td>2022-11-08T04:00:00.000Z</td>
-                                <td>500.0</td>
-                                <td>Monthly Pocket Money</td>
-                                <td><Button variant="danger">Delete</Button></td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                    <Container> 
+                        <Table striped bordered>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>AccountID</th>
+                                    <th>ReceivingAccountID</th>
+                                    <th>Date</th>
+                                    <th>Transaction Amount</th>
+                                    <th>Comment</th>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>621156213</td>
+                                    <td>339657462</td>
+                                    <td>2022-11-08T04:00:00.000Z</td>
+                                    <td>500.0</td>
+                                    <td>Monthly Pocket Money</td>
+                                    <td><Button className="delete-button" variant="danger">Delete</Button></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>621156213</td>
+                                    <td>339657462</td>
+                                    <td>2022-11-08T04:00:00.000Z</td>
+                                    <td>500.0</td>
+                                    <td>Monthly Pocket Money</td>
+                                    <td><Button className="delete-button" variant="danger">Delete</Button></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>621156213</td>
+                                    <td>339657462</td>
+                                    <td>2022-11-08T04:00:00.000Z</td>
+                                    <td>500.0</td>
+                                    <td>Monthly Pocket Money</td>
+                                    <td><Button className="delete-button" variant="danger">Delete</Button></td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                        
+                        <div className="d-flex justify-content-end"> 
+                            <Button className="add-button" variant="success" size="md" onClick={handleShow}>
+                                Add New Transaction
+                            </Button>
+                            <AddModal show={show} handleClose={handleClose} />
+                        </div>
+                        
+                    </Container>
+                    
                 </Row>
                 <Row>
-                    <Button variant="primary" size="md" onClick={handleShow}>
-                        Add Transaction
-                    </Button>
-                    <AddModal show={show} handleClose={handleClose} />
+                    
                 </Row>
             </Col>
         </Container>

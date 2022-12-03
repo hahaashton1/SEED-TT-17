@@ -1,9 +1,10 @@
 import React from "react";
+import './Dashboard.css'; 
 import { Button, Modal, Form } from "react-bootstrap";
 
 const AddModal = (props) => {
     return (
-        <Modal show={props.show} onHide={props.handleClose}>
+        <Modal show={props.show} onHide={props.handleClose} style={{borderRadius: 0}}>
             <Modal.Header closeButton>
                 <Modal.Title>Add Scheduled Transaction</Modal.Title>
             </Modal.Header>
@@ -29,16 +30,12 @@ const AddModal = (props) => {
                         <Form.Label>Comment</Form.Label>
                         <Form.Control type="text" placeholder="Enter comments" />
                     </Form.Group>
+                    <br/>
                     <Button variant="primary">
                         Submit
                     </Button>
                 </Form>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={props.handleClose}>
-                    Close
-                </Button>
-            </Modal.Footer>
         </Modal>
     );
 }
