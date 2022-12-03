@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import background from "../assets/mbs.jpg";
 
 // import TextField from "@mui/material/TextField";
 import { authenticate } from "../services/Authentication";
@@ -36,13 +37,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="loginPage">
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <Card style={{margin: 5}}> 
+    <div className="loginPage" style={{paddingTop: "300px", paddingBottom: "300px", backgroundImage: `url(${background})`, backgroundSize: 'cover'}}>
+      <Card>
+      <div style={{margin: '15px', boxShadow: '20px'}}>
       <h1>Welcome to DBS!</h1>
       <br></br>
       
@@ -93,7 +90,9 @@ const LoginPage = () => {
       )}*/}
 
       <Button variant="danger" onClick={onClickAuthenticate}>Log In!</Button>
+      </div> 
       </Card>
+    
     </div>
   );
 };
