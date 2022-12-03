@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
+const bankAccountRouter = require("./routes/bankAccounts");
 
 const app = express();
-const port = 5001;
+const port = process.env.PORT || 5001;
 
 app.use(cors());
 
@@ -17,6 +19,9 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+// Routers
+app.use("/bankaccounts", bankAccountRouter);
+
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   console.error(err.message, err.stack);
@@ -27,3 +32,4 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
