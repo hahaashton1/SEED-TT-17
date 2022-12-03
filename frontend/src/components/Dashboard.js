@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,9 +6,14 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Table from "react-bootstrap/Table";
-import Form from 'react-bootstrap/Form';
+import AddModal from "./addModal";
 
 const Dashboard = () => {
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <Container fluid="md">
             <Col>
@@ -83,25 +88,10 @@ const Dashboard = () => {
                     </Table>
                 </Row>
                 <Row>
-                    <div>
-                        <h2>Add Scheduled Transaction</h2>
-                    </div>
-
-                    <Card style={{ width: '80%' }}>
-                        <Card.Body>
-                            <Form>
-                                <Form.Group controlId="formBasicEmail">
-                                    <Form.Label>Receiving Account ID</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Receiving Account ID" />
-                                </Form.Group>
-                            </Form>
-                        </Card.Body>
-                        <Card.Footer>
-                            <Button variant="primary" type="submit">
-                                Add
-                            </Button>
-                        </Card.Footer>
-                    </Card>
+                    <Button variant="primary" size="md" onClick={handleShow}>
+                        Add Transaction
+                    </Button>
+                    <AddModal show={show} handleClose={handleClose} />
                 </Row>
             </Col>
         </Container>
