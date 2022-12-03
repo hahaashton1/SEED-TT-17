@@ -13,6 +13,7 @@ def runTransaction(transaction_id):
     new_balance = current_balanace - transfer_amount
     user_bank_account_obj.accountbalance = new_balance
     user_bank_account_obj.save()
+    print(user_bank_account_id,current_balanace,transfer_amount,new_balance)
 
     ### get receiving Bank Account
     receiver_bank_account_id = transaction.receivingaccountid
@@ -22,5 +23,6 @@ def runTransaction(transaction_id):
     ### Add Amount to receiving bank account
     receiver_bank_account_obj.accountbalance = receiver_new_balance
     receiver_bank_account_obj.save()
+    print(receiver_bank_account_id,receiver_current_balanace,transfer_amount,receiver_new_balance)
 
     return

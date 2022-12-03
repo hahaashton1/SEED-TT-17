@@ -58,22 +58,24 @@ def viewTransactionDetails(request):
     return render(request, 'dbstechtrek_webapp/viewTransactionDetails.html', context )
 
 def createTransactionDetails(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         ### get current account id
         ### Create scheduled transaction object based on form input
-        transaction_id = request.POST["TransactionID"]
-        receiving_account_id = request.POST["ReceivingAccountID"]
-        date_value = request.POST["Date"]
-        transaction_amount = request.POST["TransactionAmount"]
-        transaction_comment = request.POST["Comment"]
-        user_account_id = request.POST["AccountID"]
+        transaction_id = request.GET["TransactionID"]
+        receiving_account_id = request.GET["ReceivingAccountID"]
+        date_value = request.GET["Date"]
+        transaction_amount = request.GET["TransactionAmount"]
+        transaction_comment = request.GET["Comment"]
+        user_account_id = request.GET["AccountID"]
+        if user_account_id:
+            user_account_obj = BankAccount.objects.get(accountid=user_account_id)
         scheduledTransactionObj = ScheduledTransactions(
             transactionid = transaction_id,
             receivingaccountid = receiving_account_id,
             date = date_value,
             transactionamount = transaction_amount,
             comment = transaction_comment,
-            accountid = user_account_id,
+            accountid = user_account_obj,
         )
         scheduledTransactionObj.save()
 
@@ -82,7 +84,8 @@ def createTransactionDetails(request):
             func='runTransaction',
             # hook='hooks.print_result',
             args=f'transaction_id={transaction_id}',
-            next_run=date_value
+            next_run=date_value,
+            repeats=1
             # schedule_type=Schedule.DAILY
         )
     ### if scheduler cannot work, test using this
