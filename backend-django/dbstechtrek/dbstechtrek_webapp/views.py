@@ -58,29 +58,29 @@ def createTransactionDetails(request):
         ### get current account id
         ### Create scheduled transaction object based on form input
         transaction_id = request.POST["TransactionID"]
-        receiving_account_id = request.POST["AccountID"]
-        date_value = request.POST["ReceivingAccountID"]
-        transaction_amount = request.POST["Date"]
-        transaction_comment = request.POST["TransactionAmount"]
-        user_account_id = request.POST["Comment"]
-    scheduledTransactionObj = ScheduledTransactions(
-        transactionid = transaction_id,
-        receivingaccountid = receiving_account_id,
-        date = date_value,
-        transactionamount = transaction_amount,
-        comment = transaction_comment,
-        accountid = user_account_id,
-    )
-    scheduledTransactionObj.save()
+        receiving_account_id = request.POST["ReceivingAccountID"]
+        date_value = request.POST["Date"]
+        transaction_amount = request.POST["TransactionAmount"]
+        transaction_comment = request.POST["Comment"]
+        user_account_id = request.POST["AccountID"]
+        scheduledTransactionObj = ScheduledTransactions(
+            transactionid = transaction_id,
+            receivingaccountid = receiving_account_id,
+            date = date_value,
+            transactionamount = transaction_amount,
+            comment = transaction_comment,
+            accountid = user_account_id,
+        )
+        scheduledTransactionObj.save()
 
-    ### Create Scheduled Obj to run task
-    Schedule.objects.create(
-        func='runTransaction',
-        # hook='hooks.print_result',
-        args=f'transaction_id={transaction_id}',
-        next_run=date_value
-        # schedule_type=Schedule.DAILY
-    )
+        ### Create Scheduled Obj to run task
+        Schedule.objects.create(
+            func='runTransaction',
+            # hook='hooks.print_result',
+            args=f'transaction_id={transaction_id}',
+            next_run=date_value
+            # schedule_type=Schedule.DAILY
+        )
     ### if scheduler cannot work, test using this
     # runTransaction(transaction_id)
     return render(request, 'dbstechtrek_webapp/index.html' )
