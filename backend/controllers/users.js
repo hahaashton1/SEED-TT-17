@@ -45,8 +45,20 @@ async function get_email(user_id) {
 
 async function update_address(user_id, new_address) {
   const rows = await db.insert(`
-    UPDATE USER SET Address = "${new_address}" WHERE UserId = user_id`);
+    UPDATE USER SET Address = "${new_address}" WHERE UserId = ${user_id}`);
   return { rows };
 }
 
-module.exports = { user_login, get_address, get_email, update_address };
+async function update_email(user_id, new_email) {
+  const rows = await db.insert(`
+      UPDATE USER SET Address = "${new_email}" WHERE UserId = ${user_id}`);
+  return { rows };
+}
+
+module.exports = {
+  user_login,
+  get_address,
+  get_email,
+  update_address,
+  update_email,
+};
