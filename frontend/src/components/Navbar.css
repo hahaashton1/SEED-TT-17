@@ -1,4 +1,19 @@
-img {
-    width: 500px;
-    height: 30px;
- }
+.navlink{
+    font-size:20; 
+    font: 'georgia'; 
+    font-weight: bold; 
+    color: white; 
+}
+
+navprofile{
+    font-size:20; 
+    font: 'georgia'; 
+    font-weight: bold; 
+    color: white; 
+}
+
+.navdropdown{
+    font-size:25; 
+    font: 'georgia'; 
+    color: black; 
+}
